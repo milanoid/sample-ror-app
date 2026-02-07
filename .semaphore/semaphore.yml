@@ -2,8 +2,8 @@ version: v1.0
 name: Rails Sample Build
 agent:
   machine:
-    type: sf-runner01
-    os_image: ubuntu2404
+    type: s1-runner01
+    os_image: ''
   containers:
     - name: main
       image: 'ruby:3.3'
