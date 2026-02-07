@@ -15,12 +15,12 @@ blocks:
     task:
       prologue:
         commands:
-          - checkout
           - ruby --version
           - gem --version
       jobs:
         - name: Bundle Install
           commands:
+            - checkout
             - bundle install --jobs=4 --retry=3
             - bundle exec rails --version
             - echo "Rails setup completed successfully!"
