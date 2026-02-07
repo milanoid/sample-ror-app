@@ -15,6 +15,11 @@ blocks:
     task:
       prologue:
         commands:
+          - whoami
+          - cat /etc/os-release
+          - pwd
+          - ls -la
+          - ps aux | grep "agent"
           - checkout
           - ruby --version
           - gem --version
