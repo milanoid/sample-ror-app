@@ -6,7 +6,7 @@ agent:
     os_image: ''
   containers:
     - name: main
-      image: 'semaphoreci.com/ruby:3.2.0'
+      image: 'registry.semaphoreci.com/ruby:3.2.0'
       env_vars:
         - name: RAILS_ENV
           value: test
