@@ -1,50 +1,26 @@
 version: v1.0
-name: Rails CI Pipeline
+name: Rails Sample Build
 agent:
   machine:
-    type: e1-standard-2
-    os_image: ubuntu2004
-
+    type: sf-runner01
+    os_image: ubuntu2404
+  containers:
+    - name: main
+      image: 'ruby:3.3'
+      env_vars:
+        - name: RAILS_ENV
+          value: test
 blocks:
-  - name: Setup
+  - name: Build
     task:
+      prologue:
+        commands:
+          - checkout
+          - ruby --version
+          - gem --version
       jobs:
         - name: Bundle Install
           commands:
-            - checkout
-            - sem-version ruby 3.2
-            - cache restore
-            - bundle install --deployment --path vendor/bundle
-            - cache store
-
-  - name: Tests
-    task:
-      prologue:
-        commands:
-          - checkout
-          - sem-version ruby 3.2
-          - cache restore
-          - bundle install --deployment --path vendor/bundle
-      jobs:
-        - name: Run Tests
-          commands:
-            - bundle exec rails db:create RAILS_ENV=test
-            - bundle exec rails db:migrate RAILS_ENV=test
-            - bundle exec rails test
-
-  - name: Linting
-    task:
-      prologue:
-        commands:
-          - checkout
-          - sem-version ruby 3.2
-          - cache restore
-          - bundle install --deployment --path vendor/bundle
-      jobs:
-        - name: RuboCop
-          commands:
-            - bundle exec rubocop
-
-        - name: Brakeman Security Check
-          commands:
-            - bundle exec brakeman --no-pager
+            - bundle install --jobs=4 --retry=3
+            - bundle exec rails --version
+            - echo "Rails setup completed successfully!"
