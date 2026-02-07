@@ -1,0 +1,50 @@
+version: v1.0
+name: Rails CI Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+
+blocks:
+  - name: Setup
+    task:
+      jobs:
+        - name: Bundle Install
+          commands:
+            - checkout
+            - sem-version ruby 3.2
+            - cache restore
+            - bundle install --deployment --path vendor/bundle
+            - cache store
+
+  - name: Tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - sem-version ruby 3.2
+          - cache restore
+          - bundle install --deployment --path vendor/bundle
+      jobs:
+        - name: Run Tests
+          commands:
+            - bundle exec rails db:create RAILS_ENV=test
+            - bundle exec rails db:migrate RAILS_ENV=test
+            - bundle exec rails test
+
+  - name: Linting
+    task:
+      prologue:
+        commands:
+          - checkout
+          - sem-version ruby 3.2
+          - cache restore
+          - bundle install --deployment --path vendor/bundle
+      jobs:
+        - name: RuboCop
+          commands:
+            - bundle exec rubocop
+
+        - name: Brakeman Security Check
+          commands:
+            - bundle exec brakeman --no-pager
