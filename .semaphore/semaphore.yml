@@ -23,8 +23,9 @@ global_job_config:
       - checkout
 #      - cp ../master.key ./config/master.key
       - cache restore
-      - sem-version c 9
-      - sem-version ruby 3.4.8
+#     https://docs.semaphore.io/using-semaphore/self-hosted#limtations
+#      - sem-version c 9
+#      - sem-version ruby 3.4.8
       - nvm use stable
       - gem install bundler -v 2.7.2
       - bundle config set --local deployment 'true'
