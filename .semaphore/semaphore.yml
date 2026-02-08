@@ -26,6 +26,7 @@ global_job_config:
 #     https://docs.semaphore.io/using-semaphore/self-hosted#limtations
 #      - sem-version c 9
 #      - sem-version ruby 3.4.8
+      # source to make 'nvm' shell function available in non-interactive shell
       - source ~/.nvm/nvm.sh && nvm use stable
       - gem install bundler -v 2.7.2
       - bundle config set --local deployment 'true'
