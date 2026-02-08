@@ -48,3 +48,6 @@ yarn-debug.log*
 
 # Byebug history
 .byebug_history
+
+# gg semaphore files
+.semaphore/gg.yml
