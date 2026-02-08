@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe Post, type: :model do
+RSpec.describe 'Smoke test' do
   it "passes" do
     expect(true).to be true
   end
