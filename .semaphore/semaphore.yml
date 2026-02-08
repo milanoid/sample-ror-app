@@ -10,6 +10,13 @@ agent:
 #      env_vars:
 #        - name: RAILS_ENV
 #          value: test
+execution_time_limit:
+  hours: 2
+queue:
+  processing: parallel
+auto_cancel:
+  queued:
+    when: 'true'
 blocks:
   - name: Build
     task:
