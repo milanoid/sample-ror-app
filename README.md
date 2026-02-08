@@ -35,26 +35,26 @@ Since this app is designed for CI/CD testing, you can run it entirely with Docke
 
 ### Run RSpec Tests
 ```bash
-docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.2 bash -c "bundle install && bundle exec rspec"
+docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.8 bash -c "bundle install && bundle exec rspec"
 ```
 
 ### Run Cucumber Tests
 ```bash
-docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.2 bash -c "bundle install && bundle exec cucumber"
+docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.8 bash -c "bundle install && bundle exec cucumber"
 ```
 
 ### Run Linting
 ```bash
 # RuboCop
-docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.2 bash -c "bundle install && bundle exec rubocop"
+docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.8 bash -c "bundle install && bundle exec rubocop"
 
 # Brakeman security check
-docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.2 bash -c "bundle install && bundle exec brakeman --no-pager"
+docker run --rm -v "$(pwd):/app" -w /app ruby:3.4.8 bash -c "bundle install && bundle exec brakeman --no-pager"
 ```
 
 ### Start the Server (Optional)
 ```bash
-docker run --rm -v "$(pwd):/app" -w /app -p 3000:3000 ruby:3.4.2 bash -c "bundle install && bin/rails db:migrate && bin/rails server -b 0.0.0.0"
+docker run --rm -v "$(pwd):/app" -w /app -p 3000:3000 ruby:3.4.8 bash -c "bundle install && bin/rails db:migrate && bin/rails server -b 0.0.0.0"
 ```
 
 Then visit http://localhost:3000
