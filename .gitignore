@@ -1,2 +1,50 @@
-/tmp/
+# Ignore bundler config.
+/.bundle
+
+# Ignore all environment files (except templates).
+/.env*
+!/.env*.erb
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/.keep
+
+# Ignore storage (for Active Storage files and SQLite databases in development/test).
+/storage/*
+!/storage/.keep
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore bootsnap cache
+/tmp/cache/bootsnap/
+
+# Ignore node_modules
+/node_modules/
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore assets precompiled for production.
+/public/assets
+
+# IDE and editor files
 .idea
+*.swp
+*.swo
+*~
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Byebug history
+.byebug_history
