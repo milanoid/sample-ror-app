@@ -41,22 +41,47 @@ global_job_config:
       - 'bundle exec rake assets:precompile'
       - cache store
 blocks:
-  - name: Build
+  - name: Cucumber
+    dependencies: []
     task:
-      prologue:
-        commands:
-          - whoami
-          - cat /etc/os-release
-          - pwd
-          - ls -la
-          - ps aux | grep "agent"
-          - checkout
-          - ls -la
-          - ruby --version
-          - gem --version
+      env_vars:
+        - name: TEST_TYPE
+          value: cucumber
+        - name: RAILS_ENV
+          value: test
+      secrets:
+        - name: Environment variables
+        - name: Klient secrets
       jobs:
-        - name: Bundle Install
+        - name: Cucumber
           commands:
-            - bundle install --jobs=4 --retry=3
-            - bundle exec rails --version
-            - echo "Rails setup completed successfully!"
+            - bundle exec cucumber --format junit --out cucumber.xml
+      epilogue:
+        always:
+          commands:
+            - test-results publish cucumber.xml
+  - name: RSpec
+    dependencies: []
+    task:
+      env_vars:
+        - name: TEST_TYPE
+          value: rspec
+        - name: RAILS_ENV
+          value: test
+      secrets:
+        - name: Environment variables
+        - name: Klient secrets
+      jobs:
+        - name: RSpec
+          commands:
+            - bundle exec rspec --format RspecJunitFormatter --out rspec.xml
+      epilogue:
+        always:
+          commands:
+            - test-results publish rspec.xml
+after_pipeline:
+  task:
+    jobs:
+      - name: Publish Results
+        commands:
+          - test-results gen-pipeline-report
