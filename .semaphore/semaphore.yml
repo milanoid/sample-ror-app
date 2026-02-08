@@ -17,6 +17,27 @@ queue:
 auto_cancel:
   queued:
     when: 'true'
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+#      - cp ../master.key ./config/master.key
+      - cache restore
+      - sem-version c 9
+      - sem-version ruby 3.4.8
+      - nvm use stable
+      - gem install bundler -v 2.7.2
+      - bundle config set --local deployment 'true'
+      - bundle config set --local path 'vendor/bundle'
+      - bundle install
+      #      - sem-service start postgres 15
+      #      - psql -U postgres -h localhost -c "CREATE USER runner WITH PASSWORD 'semaphoredb';"
+      #      - psql -U postgres -h localhost -c "ALTER USER runner WITH SUPERUSER;"
+      #      - 'bundle exec rake db:setup'
+      #      - 'bundle exec rake db:test:prepare'
+      - bundle exec yarn install --check-files
+      - 'bundle exec rake assets:precompile'
+      - cache store
 blocks:
   - name: Build
     task:
