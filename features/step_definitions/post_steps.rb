@@ -1,5 +1,5 @@
 Given('I am on the posts page') do
-  visit posts_path
+  visit '/posts'
 end
 
 Then('I should see {string}') do |text|
