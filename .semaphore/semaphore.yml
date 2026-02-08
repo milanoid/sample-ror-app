@@ -74,8 +74,7 @@ blocks:
       jobs:
         - name: RSpec
           commands:
-            #- bundle exec rspec --format RspecJunitFormatter --out rspec.xml
-            - bundle exec rspec --out rspec.xml
+            - bundle exec rspec --format RspecJunitFormatter --out rspec.xml
       epilogue:
         always:
           commands:

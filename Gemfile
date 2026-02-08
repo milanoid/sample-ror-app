@@ -55,6 +55,7 @@ group :development, :test do
 
   # RSpec testing framework
   gem "rspec-rails"
+  gem "rspec_junit_formatter"
 
   # Cucumber BDD testing
   gem "cucumber-rails", require: false
