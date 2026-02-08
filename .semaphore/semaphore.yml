@@ -49,9 +49,9 @@ blocks:
           value: cucumber
         - name: RAILS_ENV
           value: test
-      secrets:
-        - name: Environment variables
-        - name: Klient secrets
+#      secrets:
+#        - name: Environment variables
+#        - name: Klient secrets
       jobs:
         - name: Cucumber
           commands:
@@ -68,9 +68,9 @@ blocks:
           value: rspec
         - name: RAILS_ENV
           value: test
-      secrets:
-        - name: Environment variables
-        - name: Klient secrets
+#      secrets:
+#        - name: Environment variables
+#        - name: Klient secrets
       jobs:
         - name: RSpec
           commands:
