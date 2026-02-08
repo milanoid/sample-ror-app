@@ -26,7 +26,7 @@ global_job_config:
 #     https://docs.semaphore.io/using-semaphore/self-hosted#limtations
 #      - sem-version c 9
 #      - sem-version ruby 3.4.8
-      - nvm use stable
+      - source ~/.nvm/nvm.sh && nvm use stable
       - gem install bundler -v 2.7.2
       - bundle config set --local deployment 'true'
       - bundle config set --local path 'vendor/bundle'
