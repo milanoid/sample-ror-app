@@ -1,0 +1,79 @@
+# syntax=docker/dockerfile:1
+# Dockerfile for CI/CD builds - replicates SemaphoreCI environment
+# This image contains only the base tools (Ruby, Node.js, gcc-9, Bundler)
+# Project dependencies are installed at build time when running the container
+
+# Use Ubuntu 20.04 as base (matching SemaphoreCI gg.yml)
+FROM ubuntu:20.04
+
+# Set working directory
+WORKDIR /app
+
+# Set environment variables
+ARG RUBY_VERSION=3.4.8
+ENV NODE_VERSION=20 \
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+# Install system dependencies including gcc-9
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    # Build tools and compilers
+    build-essential \
+    gcc-9 \
+    g++-9 \
+    # Version control
+    git \
+    # Database
+    sqlite3 \
+    libsqlite3-dev \
+    # Ruby dependencies
+    libyaml-dev \
+    libssl-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    libffi-dev \
+    pkg-config \
+    # Image processing (for image_processing gem)
+    libvips \
+    libvips-dev \
+    # Node.js installation dependencies
+    curl \
+    ca-certificates \
+    gnupg \
+    wget && \
+    # Set gcc-9 as default
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 \
+                       --slave /usr/bin/g++ g++ /usr/bin/g++-9 \
+                       --slave /usr/bin/gcov gcov /usr/bin/gcov-9 && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install Ruby 3.4.8 using ruby-build
+RUN git clone https://github.com/rbenv/ruby-build.git /tmp/ruby-build && \
+    cd /tmp/ruby-build && \
+    PREFIX=/usr/local ./install.sh && \
+    ruby-build ${RUBY_VERSION} /usr/local && \
+    rm -rf /tmp/ruby-build
+
+# Install Node.js LTS (v20) via NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Enable Corepack for Yarn
+RUN corepack enable
+
+# Install Bundler 2.7.2 (matching SemaphoreCI)
+RUN gem install bundler -v 2.7.2
+
+# Verify installations
+RUN echo "=== CI Environment Info ===" && \
+    ruby -v && \
+    bundler -v && \
+    node -v && \
+    yarn -v && \
+    gcc -v 2>&1 | grep "gcc version" && \
+    echo "=== Ready for builds ===" 
+
+CMD ["bash"]
