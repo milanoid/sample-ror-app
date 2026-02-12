@@ -68,6 +68,11 @@ RUN corepack enable
 # Install Bundler 2.7.2 (matching SemaphoreCI)
 RUN gem install bundler -v 2.7.2
 
+# Configure SSH for GitHub
+RUN mkdir -p ~/.ssh && \
+    chmod 700 ~/.ssh && \
+    ssh-keyscan -t ed25519,rsa github.com >> ~/.ssh/known_hosts
+
 # Install SemaphoreCI self-hosted toolbox
 RUN cd /root && \
     wget -q https://github.com/semaphoreci/toolbox/releases/download/v1.41.0/self-hosted-linux.tar && \
