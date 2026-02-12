@@ -25,6 +25,7 @@ RUN apt-get update -qq && \
     g++-9 \
     # Version control
     git \
+    openssh-client \
     # Database
     sqlite3 \
     libsqlite3-dev \
