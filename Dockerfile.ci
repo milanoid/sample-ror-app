@@ -71,6 +71,7 @@ RUN gem install bundler -v 2.7.2
 # Configure SSH for GitHub
 RUN mkdir -p ~/.ssh && \
     chmod 700 ~/.ssh && \
+    touch ~/.ssh/known_hosts && \
     ssh-keyscan -t ed25519,rsa github.com >> ~/.ssh/known_hosts
 
 # Install SemaphoreCI self-hosted toolbox
