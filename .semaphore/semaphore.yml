@@ -4,12 +4,12 @@ agent:
   machine:
     type: s1-runner01
     os_image: ''
-#  containers:
-#    - name: main
-#      image: 'registry.semaphoreci.com/ruby:3.2.0'
-#      env_vars:
-#        - name: RAILS_ENV
-#          value: test
+  containers:
+    - name: main
+      image: 'ghcr.io/milanoid/semaphore-agent:1.0.5'
+      env_vars:
+        - name: RAILS_ENV
+          value: test
 execution_time_limit:
   hours: 2
 queue:
